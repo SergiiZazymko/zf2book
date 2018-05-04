@@ -54,4 +54,9 @@ class RegisterController extends AbstractActionController
             'action' => 'confirm',
         ]);
     }
+
+    protected function createUser($data)
+    {
+        $sm = $this->getServiceLocator();
+    }
 }
