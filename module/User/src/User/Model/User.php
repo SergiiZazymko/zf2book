@@ -16,10 +16,11 @@ class User
 
     public function exchangeArray($data)
     {
+        $this->id = $data['id'] ?? null;
         $this->name = $data['name'] ?? null;
         $this->email = $data['email'] ?? null;
         if (isset($data['password'])) {
-            $this->setPassword($data['password']));
+            $this->setPassword($data['password']);
         }
     }
 }

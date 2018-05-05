@@ -8,9 +8,7 @@
 
 namespace User\Controller;
 
-
-use User\Form\RegisterFilter;
-use User\Form\RegisterForm;
+use User\Model\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -18,7 +16,7 @@ class RegisterController extends AbstractActionController
 {
     public function indexAction()
     {
-        $form = new RegisterForm();
+        $form = $this->getServiceLocator()->get('RegisterForm');
         $view = new ViewModel(['form' => $form]);
         return $view;
     }
@@ -37,8 +35,7 @@ class RegisterController extends AbstractActionController
             ]);
         }
         $post = $this->request->getPost();
-        $form = new RegisterForm();
-        $form->setInputFilter(new RegisterFilter());
+        $form = $this->getServiceLocator()->get('RegisterForm');
         $form->setData($post);
         if (!$form->isValid()) {
             $model = new ViewModel([
@@ -49,6 +46,7 @@ class RegisterController extends AbstractActionController
             return $model;
         }
 
+        $this->createUser($form->getData());
         return $this->redirect()->toRoute(null, [
             'controller' => 'register',
             'action' => 'confirm',
@@ -57,6 +55,10 @@ class RegisterController extends AbstractActionController
 
     protected function createUser($data)
     {
-        $sm = $this->getServiceLocator();
+        $user = new User();
+        $user->exchangeArray($data);
+        $userTable = $this->getServiceLocator()->get('UserTable');
+        $userTable->saveUser($user);
+        return true;
     }
 }

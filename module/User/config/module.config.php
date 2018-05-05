@@ -6,6 +6,7 @@ return [
             'User\Controller\Index' => 'User\Controller\IndexController',
             'User\Controller\Register' => 'User\Controller\RegisterController',
             'User\Controller\Login' => 'User\Controller\LoginController',
+            'User\Controller\UserManager' => 'User\Controller\UserManagerController',
         ]
     ],
     'router' => [
@@ -33,6 +34,20 @@ return [
                             ],
                             'defaults' => []
                         ],
+                    ],
+                ],
+            ],
+            'user-manager' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/user-manager[/:action][/:id]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*',
+                    ],
+                    'defaults' => [
+                        'controller' => 'User\Controller\UserManager',
+                        'action' => 'index',
                     ],
                 ],
             ],

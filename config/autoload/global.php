@@ -18,7 +18,7 @@ return [
         'username' => 'root',
         'password' => '1',
         'driver_options' => [
-            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF-8'"
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'"
         ],
     ],
     'service_manager' => [
