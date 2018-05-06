@@ -1,0 +1,18 @@
+<h1>Upload Manager</h1>
+<table style="border: 1px solid black">
+    <?php
+    foreach ($this->uploads as $upload) {
+        ?>
+        <tr style="border: 1px solid black">
+            <td style="border: 1px solid black"><?= $upload->id; ?></td>
+            <td style="border: 1px solid black"><a href="<?= $upload->filename; ?>"><?= $upload->filename; ?></a></td>
+            <td style="border: 1px solid black"><?= $upload->label; ?></td>
+            <td style="border: 1px solid black"><?= $upload->user_id; ?></td>
+            <td style="border: 1px solid black"><a href="<?= $this->url(null, ['controller' => 'UploadManger', 'action' => 'edit', 'id' => $upload->id]); ?>">edit</a></td>
+            <td style="border: 1px solid black"><a href="<?= $this->url(null, ['controller' => 'UploadManger', 'action' => 'delete', 'id' => $upload->id]); ?>">delete</a></td>
+        </tr>
+        <?php
+    }
+    ?>
+</table>
+<br>

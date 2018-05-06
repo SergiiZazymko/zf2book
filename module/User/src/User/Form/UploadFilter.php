@@ -1,36 +1,26 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: sergii
+ * Date: 06.05.18
+ * Time: 14:23
+ */
 
 namespace User\Form;
 
+
 use Zend\Filter\HtmlEntities;
 use Zend\Filter\StripTags;
+use Zend\InputFilter\FileInput;
 use Zend\InputFilter\InputFilter;
-use Zend\Validator\EmailAddress;
 use Zend\Validator\StringLength;
 
-class RegisterFilter extends InputFilter
+class UploadFilter extends InputFilter
 {
     public function __construct()
     {
         $this->add([
-            'name' => 'email',
-            'required' => true,
-            'validators' => [
-                [
-                    'name' => EmailAddress::class,
-                    'options' => [
-                        'domain' => true,
-                        'messages' => [
-                            \Zend\Validator\EmailAddress::INVALID_FORMAT => 'Email address invalid',
-                            \Zend\Validator\EmailAddress::INVALID_HOSTNAME => 'Email hostname invalid',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'name',
+            'name' => 'label',
             'required' => true,
             'filters' => [
                 [
@@ -56,14 +46,14 @@ class RegisterFilter extends InputFilter
             ],
         ]);
 
-        $this->add([
-            'name' => 'password',
-            'required' => true,
-        ]);
-
-        $this->add([
-            'name' => 'confirm_password',
-            'required' => true,
-        ]);
+//        $this->add([
+//            'name' => 'fileupload',
+////            'required' => true,
+////            'validators' => [
+////                [
+////                    'name' => FileInput::class,
+////                ],
+////            ],
+//        ]);
     }
 }

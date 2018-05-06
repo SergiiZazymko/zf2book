@@ -7,6 +7,7 @@ return [
             'User\Controller\Register' => 'User\Controller\RegisterController',
             'User\Controller\Login' => 'User\Controller\LoginController',
             'User\Controller\UserManager' => 'User\Controller\UserManagerController',
+            'User\Controller\UploadManager' => 'User\Controller\UploadManagerController',
         ]
     ],
     'router' => [
@@ -51,11 +52,28 @@ return [
                     ],
                 ],
             ],
+            'upload-manager' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/upload-manager[/:action][/:id]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*',
+                    ],
+                    'defaults' => [
+                        'controller' => 'User\Controller\UploadManager',
+                        'action' => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'view_manager' => [
         'template_path_stack' => [
             'user' => __DIR__ . '/../view',
         ],
+    ],
+    'module_config' => [
+        'upload_location' => __DIR__ . '/../../../public/uploads',
     ],
 ];

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b1950fa8e74e983424add447bf708f3",
+    "content-hash": "16ccf5d7990d86d68ee0ddf80a91d57c",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -5141,8 +5141,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zendframework/zftool": 20,
-        "zendframework/zend-developer-tools": 20
+        "zendframework/zend-developer-tools": 20,
+        "zendframework/zftool": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

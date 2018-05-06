@@ -5,6 +5,10 @@ use User\Form\LoginFilter;
 use User\Form\LoginForm;
 use User\Form\RegisterFilter;
 use User\Form\RegisterForm;
+use User\Form\UploadFilter;
+use User\Form\UploadForm;
+use User\Model\Upload;
+use User\Model\UploadTable;
 use User\Model\User;
 use User\Model\UserTable;
 use Zend\Authentication\Adapter\DbTable;
@@ -41,6 +45,17 @@ class Module
                 // ...
             ],
             'factories' => [
+                'UploadTable' => function($sm) {
+                    $tableGateway = $sm->get('UploadTableGateway');
+                    return new UploadTable($tableGateway);
+                },
+                'UploadTableGateway' => function($sm) {
+                    $adapter = $sm->get(Adapter::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Upload());
+                    $tableGateway = new TableGateway(UploadTable::TABLE, $adapter, null, $resultSetPrototype);
+                    return $tableGateway;
+                },
                 'UserTable' => function($sm) {
                     $tableGateway = $sm->get('UserTableGateway');
                     return new UserTable($tableGateway);
@@ -52,6 +67,11 @@ class Module
                     $tableGateway = new TableGateway(UserTable::TABLE, $adapter, null, $resultSetPrototype);
                     return $tableGateway;
                 },
+                'UploadForm' => function($sm) {
+                    $uploadForm = new UploadForm();
+                    $uploadForm->setInputFilter($sm->get('UploadFilter'));
+                    return $uploadForm;
+                },
                 'LoginForm' => function($sm) {
                     $loginForm = new LoginForm();
                     $loginForm->setInputFilter($sm->get('LoginFilter'));
@@ -61,6 +81,9 @@ class Module
                     $registerForm = new RegisterForm();
                     $registerForm->setInputFilter($sm->get('RegisterFilter'));
                     return $registerForm;
+                },
+                'UploadFilter' => function() {
+                    return new UploadFilter();
                 },
                 'LoginFilter' => function() {
                     return new LoginFilter();
@@ -76,6 +99,15 @@ class Module
                     $authService->setAdapter($dbTableAuthAdapter);
                     return $authService;
                 }
+            ],
+            'invocables' => [
+                // ...
+            ],
+            'services' => [
+                // ...
+            ],
+            'shared' => [
+                // ...
             ],
         ];
     }

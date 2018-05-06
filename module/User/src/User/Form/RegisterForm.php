@@ -22,16 +22,16 @@ class RegisterForm extends Form
             'name' => 'email',
             'attributes' => ['type' => 'email', 'required' => 'required'],
             'options' => ['label' => 'Email'],
-            'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'HtmlEntities'],
-            ],
-            'validators' => [
-                [
-                    'name' => 'EmailAddress',
-                    'options' => ['messages' => [\Zend\Validator\EmailAddress::INVALID_FORMAT => 'Email address invalid']],
-                ],
-            ],
+//            'filters' => [
+//                ['name' => 'StringTrim'],
+//                ['name' => 'HtmlEntities'],
+//            ],
+//            'validators' => [
+//                [
+//                    'name' => 'EmailAddress',
+//                    'options' => ['messages' => [\Zend\Validator\EmailAddress::INVALID_FORMAT => 'Email address invalid']],
+//                ],
+//            ],
         ]);
 
         $this->add([

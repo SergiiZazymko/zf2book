@@ -9,6 +9,7 @@
 namespace User\Controller;
 
 
+use User\Model\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -52,5 +53,23 @@ class UserManagerController extends AbstractActionController
     public function deleteAction()
     {
         $this->getServiceLocator()->get('UserTable')->deleteUser($this->params()->fromRoute('id'));
+        return $this->redirect()->toRoute(null, ['controller' => 'UserManager', 'action' => 'index']);
+    }
+
+    public function addAction()
+    {
+        $form = $this->getServiceLocator()->get('RegisterForm');
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            $form->setData($data);
+            if ($form->isValid()) {
+                $userTable = $this->getServiceLocator()->get('UserTable');
+                $user = new User();
+                $user->exchangeArray($data);
+                $userTable->saveUser($user);
+                $this->redirect()->toRoute(null, ['controller' => 'UserManager', 'action' => 'index']);
+            }
+        }
+        return new ViewModel(['form' => $form]);
     }
 }

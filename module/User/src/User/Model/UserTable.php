@@ -30,11 +30,9 @@ class UserTable
      */
     public function saveUser(User $user)
     {
-        $data = [
-            'email' => $user->email,
-            'name' => $user->name,
-            'password' => $user->password,
-        ];
+        foreach ($user as $property => $value) {
+            $data[$property] = $value;
+        }
 
         $id = (int) $user->id;
 
@@ -65,6 +63,9 @@ class UserTable
         return $row;
     }
 
+    /**
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
     public function fetchAll()
     {
         return $this->tableGateway->select();

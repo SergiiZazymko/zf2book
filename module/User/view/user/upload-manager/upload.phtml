@@ -1,0 +1,32 @@
+<section class="register">
+    <h2>Upload</h2>
+    <?php if ($this->error) { ?>
+        <p>One or more errors occurred</p>
+    <?php } ?>
+
+
+    <?php
+    $form = $this->form;
+    $form->prepare();
+    $form->setAttribute('method', 'POST');
+    $form->get('submit')->setValue('Upload Now');
+
+    echo $this->form()->openTag($form);
+    ?>
+
+    <dl class="zend_from">
+        <dt><?= $this->formLabel($form->get('label')) ?></dt>
+        <dt><?= $this->formElement($form->get('label')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('label')) ?></dt>
+
+        <dt><?= $this->formLabel($form->get('fileupload')) ?></dt>
+        <dt><?= $this->formElement($form->get('fileupload')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('fileupload')) ?></dt>
+
+        <dt><?= $this->formElement($form->get('submit')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('submit')) ?></dt>
+    </dl>
+
+    <?= $this->form()->closeTag() ?>
+
+</section>

@@ -9,9 +9,11 @@
             <td style="border: 1px solid black"><?= $user->email; ?></td>
             <td style="border: 1px solid black"><?= $user->password; ?></td>
             <td style="border: 1px solid black"><a href="<?= $this->url(null, ['controller' => 'UserManger', 'action' => 'edit', 'id' => $user->id]); ?>">edit</a></td>
-            <td style="border: 1px solid black"><a href="">delete</a></td>
+            <td style="border: 1px solid black"><a href="<?= $this->url(null, ['controller' => 'UserManger', 'action' => 'delete', 'id' => $user->id]); ?>">delete</a></td>
         </tr>
         <?php
     }
     ?>
 </table>
+<br>
+<a href="<?= $this->url(null, ['controller' => 'UserManger', 'action' => 'add']); ?>">Add user</a>

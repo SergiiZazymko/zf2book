@@ -16,9 +16,13 @@ class User
 
     public function exchangeArray($data)
     {
-        $this->id = $data['id'] ?? null;
-        $this->name = $data['name'] ?? null;
-        $this->email = $data['email'] ?? null;
+        foreach ($data as $key => $value) {
+            if ($key != 'password') {
+                if (property_exists(self::class, $key)) {
+                    $this->$key = $value;
+                }
+            }
+        }
         if (isset($data['password'])) {
             $this->setPassword($data['password']);
         }

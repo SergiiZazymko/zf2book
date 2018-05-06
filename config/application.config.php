@@ -11,6 +11,7 @@ return array(
         'User',
         'CurrentTime',
         'ZendDeveloperTools',
+        'ZFTool',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

@@ -1,0 +1,42 @@
+<section class="register">
+    <h2>Add user</h2>
+    <?php if ($this->error) { ?>
+        <p>One or more errors occurred</p>
+    <?php } ?>
+
+
+    <?php
+    $form = $this->form;
+    $form->prepare();
+    $form->setAttribute('method', 'POST');
+    $form->get('submit')->setValue('Submit');
+
+
+    echo $this->form()->openTag($form);
+    ?>
+
+    <dl class="zend_from">
+        <dt><?= $this->formLabel($form->get('name')) ?></dt>
+        <dt><?= $this->formElement($form->get('name')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('name')) ?></dt>
+
+        <dt><?= $this->formLabel($form->get('email')) ?></dt>
+        <dt><?= $this->formElement($form->get('email')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('email')) ?></dt>
+
+        <dt><?= $this->formLabel($form->get('password')) ?></dt>
+        <dt><?= $this->formElement($form->get('password')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('password')) ?></dt>
+
+        <dt><?= $this->formLabel($form->get('confirm_password')) ?></dt>
+        <dt><?= $this->formElement($form->get('confirm_password')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('confirm_password')) ?></dt>
+
+        <dt><?= $this->formElement($form->get('submit')) ?></dt>
+        <dt><?= $this->formElementErrors($form->get('submit')) ?></dt>
+
+    </dl>
+
+    <?= $this->form()->closeTag() ?>
+
+</section>
