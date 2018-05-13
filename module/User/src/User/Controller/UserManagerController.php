@@ -18,6 +18,7 @@ class UserManagerController extends AbstractActionController
     public function indexAction()
     {
         $userTable = $this->getServiceLocator() ->get('UserTable');
+
         return new ViewModel(['users' => $userTable->fetchAll()]);
     }
 

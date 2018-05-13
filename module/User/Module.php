@@ -47,7 +47,8 @@ class Module
             'factories' => [
                 'UploadTable' => function($sm) {
                     $tableGateway = $sm->get('UploadTableGateway');
-                    return new UploadTable($tableGateway);
+                    $uploadSharingTableGateway = $sm->get('UploadSharingTableGateway');
+                    return new UploadTable($tableGateway, $uploadSharingTableGateway);
                 },
                 'UploadTableGateway' => function($sm) {
                     $adapter = $sm->get(Adapter::class);
@@ -98,6 +99,9 @@ class Module
                     $authService = new AuthenticationService();
                     $authService->setAdapter($dbTableAuthAdapter);
                     return $authService;
+                },
+                'UploadSharingTableGateway' => function($sm) {
+                    return new TableGateway('uploads_sharing', $sm->get(Adapter::class));
                 }
             ],
             'invocables' => [

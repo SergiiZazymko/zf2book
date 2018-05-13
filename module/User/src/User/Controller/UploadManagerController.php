@@ -9,6 +9,7 @@
 namespace User\Controller;
 
 
+use User\Form\UploadForm;
 use User\Model\Upload;
 use Zend\File\Transfer\Adapter\Http;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -54,7 +55,14 @@ class UploadManagerController extends AbstractActionController
         $userTable = $this->getServiceLocator()->get('UserTable');
         $userEmail = $this->getAuthService()->getStorage()->read();
         $user = $userTable->getUserByEmail($userEmail);
-        $view = new ViewModel(['uploads' => $uploadTable->getItemByUserId((int) $user->id)]);
+
+        $uploadTable->getSharedUploadsForUserId($user->id);
+
+        $view = new ViewModel([
+            'uploads' => $uploadTable->getItemsByUserId($user->id),
+            'shared_uploads' => $uploadTable->getSharedUploadsForUserId($user->id),
+        ]);
+
         return $view;
     }
 
@@ -108,5 +116,43 @@ class UploadManagerController extends AbstractActionController
         }
         $uploadTable->deleteItem($id);
         $this->redirect()->toRoute(null, ['controller' => 'UploadManager', 'action' => 'index']);
+    }
+
+    public function editAction()
+    {
+        $form = new UploadForm();
+
+        if ($this->getRequest()->isPost()) {
+            $post = $this->getRequest()->getPost();
+            $form->setData($post);
+
+            if ($form->isValid()) {
+                $uploadTable = $this->getServiceLocator()->get('UploadTable');
+                $upload = new Upload();
+                $upload->exchangeArray($form->getData());
+                $upload->id = $this->params()->fromRoute('id');
+                $uploadTable->saveUpload($upload);
+                $this->redirect()->toRoute(null, ['controller' => 'UploadManger', 'action' => 'index']);
+            }
+        }
+
+        $id = $this->params()->fromRoute('id');
+
+        $uploadTable = $this->getServiceLocator()->get('UploadTable');
+        $upload = $uploadTable->getUploadById($id);
+        $data['label'] = $upload->label;
+        $data['filename'] = $upload->filename;
+        $form->setData($data);
+
+        $sharedUsers = $uploadTable->getSharedUsers($this->params()->fromRoute('id'));
+        $userTable = $this->getServiceLocator()->get('UserTable');
+        foreach ($sharedUsers as $user) {
+            $users[] = $userTable->getUser($user->user_id);
+        }
+
+        return new ViewModel([
+            'form' => $form,
+            'shared_users' => $users,
+        ]);
     }
 }

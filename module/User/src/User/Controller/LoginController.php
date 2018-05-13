@@ -30,6 +30,9 @@ class LoginController extends AbstractActionController
         if ($result->isValid()) {
             $this->getAuthService()->getStorage()->write($this->request->getPost('email'));
             return $this->redirect()->toRoute(null, ['controller' => 'login', 'action' => 'confirm']);
+        } else {
+            $this->flashMessenger()->addErrorMessage('Not correct login or password');
+            $this->redirect()->toRoute(null, ['controller' => 'login', 'action' => 'index']);
         }
     }
 
